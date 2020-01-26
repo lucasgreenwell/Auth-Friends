@@ -1,27 +1,41 @@
-import React, {useState, useEffect} from 'react';
-import axios from 'axios'
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 const FriendsList = () => {
-    const [friends, setFriends] = useState([]);
-    //need to make async call and setFriends to returned data
+  const [friends, setFriends] = useState([]);
+  const [deleteThisFriend, setDeleteThisFriend] = useState({});
+  //need to make async call and setFriends to returned data
 
+  // useEffect(() => {
+  //     axios.get('localhost:5000')
+  //         .then(res => {console.log(res)})
+  //         .catch(err => {console.log(err)})
+  // }, [])
 
-    // useEffect(() => {
-    //     axios.get('localhost:5000')
-    //         .then(res => {console.log(res)})
-    //         .catch(err => {console.log(err)})
-    // }, [])
+  //then map over the friends array and render a component for each friend
 
+  //axios call that gets fired whenever a delete button gets clicked
 
-    //then map over the friends array and render a component for each friend
+  // useEffect(() => {
+  //     axios.delete(`localhost:5000/${deleteThisFriend.id}`)
+  //         .then(res => {console.log(res)})
+  //         .catch(err => {console.log(err)})
+  // }, [deleteThisFriend])
+
+  return friends.map(friend => {
     return (
-        // {friends.map( friend => {
-        //     return (<div>{friend}</div>)
-        // })}
-        <div>
-            FriendsList component
-        </div>
+      <div>
+        <p>{friend}</p>
+        <button
+          onClick={() => {
+            setDeleteThisFriend({ ...friend });
+          }}
+        >
+          delete
+        </button>
+      </div>
     );
+  });
 };
 
 export default FriendsList;

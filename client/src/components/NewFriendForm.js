@@ -35,6 +35,7 @@ function NewFriendForm(props) {
            <label for="newfriendname">Name<input type="text" id="newfriendname"/> </label>
            <label for="newfriendage">Age<input type="text" id="newfriendage"/> </label>
            <label for="newfriendemail">Email<input type="text" id="newfriendemail"/> </label>
+           <button onClick={handleSubmit}>Submit</button>
         </form>
     );
 }
