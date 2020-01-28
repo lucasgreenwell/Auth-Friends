@@ -1,12 +1,12 @@
 import React from "react";
 import "./App.css";
-import { BrowserRouter, Route } from "react-router-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 //components
+import PrivateRoute from "./components/PrivateRoute";
 import LoginForm from "./components/LoginForm";
 import NavBar from "./components/NavBar";
-import FriendsList from "./components/FriendsList";
-import NewFriendForm from "./components/NewFriendForm";
+import Dashboard from "./components/Dashboard";
 
 function App() {
   return (
@@ -14,9 +14,16 @@ function App() {
       <div className="App">
         <NavBar />
 
-        <Route path="/login" component={LoginForm} />
-        <Route path="/newfriend" component={NewFriendForm} />
-        <Route path="/friends" component={FriendsList} />
+        <Switch>
+          <Route path="/login" component={LoginForm} />
+          <PrivateRoute exact path="/dashboard" component={Dashboard} />
+          <Route
+            path="*"
+            component={() => {
+              return <p>404 Page not available</p>;
+            }}
+          />
+        </Switch>
       </div>
     </BrowserRouter>
   );

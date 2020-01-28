@@ -1,31 +1,38 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import {axiosWithAuth} from "../tools/axiosWithAuth";
 
-const FriendsList = () => {
-  const [friends, setFriends] = useState([]);
+const FriendsList = props => {
+  const friends = props.friends;
+  const setFriends = props.setFriends
   const [deleteThisFriend, setDeleteThisFriend] = useState({});
   //need to make async call and setFriends to returned data
 
-  // useEffect(() => {
-  //     axios.get('localhost:5000')
-  //         .then(res => {console.log(res)})
-  //         .catch(err => {console.log(err)})
-  // }, [])
+  useEffect(() => {
+    
+      axiosWithAuth()
+        .get('http://localhost:5000/api/friends', localStorage.getItem('token'))
+          .then(res => {setFriends(res.data)})
+          .catch(err => {console.log( err)})
+  }, [])
 
-  //then map over the friends array and render a component for each friend
+  // then map over the friends array and render a component for each friend
 
-  //axios call that gets fired whenever a delete button gets clicked
+  // axios call that gets fired whenever a delete button gets clicked
 
-  // useEffect(() => {
-  //     axios.delete(`localhost:5000/${deleteThisFriend.id}`)
-  //         .then(res => {console.log(res)})
-  //         .catch(err => {console.log(err)})
-  // }, [deleteThisFriend])
+  useEffect(() => {
+      axiosWithAuth().delete(`http://localhost:5000/api/friends/${deleteThisFriend.id}`, localStorage.getItem('token'))
+          .then( res => {setFriends(res.data)})
+          .catch(err => {console.log(err)})
+  }, [deleteThisFriend])
+
+  // return<p>FriendsList</p>
 
   return friends.map(friend => {
     return (
       <div>
-        <p>{friend}</p>
+        <p>Name: {friend.name}</p>
+        <p>Email: {friend.email}</p>
+        <p>Age: {friend.age}</p>
         <button
           onClick={() => {
             setDeleteThisFriend({ ...friend });
